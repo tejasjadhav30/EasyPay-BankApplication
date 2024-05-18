@@ -34,7 +34,7 @@ public class TransactionService {
     public Transaction transferMoney(TransferRequest transferRequest) throws TransactionException {
         Account fromAccount = accountService.getAccountById(transferRequest.getFromAccountId());
         Account toAccount = accountService.getAccountById(transferRequest.getToAccountId());
-        
+
         if (fromAccount == null || toAccount == null) {
             throw new TransactionException("Invalid account(s)");
         }
@@ -55,28 +55,28 @@ public class TransactionService {
             accountService.updateAccount(fromAccount);
             accountService.updateAccount(toAccount);
 
-          Transaction transaction=new Transaction();
-          transaction.setTransactionDate(LocalDate.now());
-          transaction.setTransactionId(UUID.randomUUID().toString().replace("-","").substring(0,20));
+            Transaction transaction=new Transaction();
+            transaction.setTransactionDate(LocalDate.now());
+            transaction.setTransactionId(UUID.randomUUID().toString().replace("-","").substring(0,20));
             transaction.setTransactionDate(LocalDate.now());
             transaction.setDescription("Money transferred Sucessfully");
             transaction.setStatus("Successful");
             transaction.setAmount(transferRequest.getAmount());
             transaction.setFromAccount(fromAccount.getAccountId());  // Set fromAccount ID
-
+            transaction.setFromAccount(fromAccount.getAccountId());
             transaction.setToAccount(toAccount.getAccountId());
             transactionRepository.save(transaction);
 
             return transaction;
 
         } catch (Exception e) {
-            logTransactionHistory(transferRequest.getFromAccountId(), transferRequest.getToAccountId(), 
-                                   transferRequest.getAmount(), "Failed");
+            logTransactionHistory(transferRequest.getFromAccountId(), transferRequest.getToAccountId(),
+                    transferRequest.getAmount(), "Failed");
             throw new TransactionException("Transaction failed");
         }
     }
-    
-    
+
+
     private boolean validateTransactionPin(Account account, String transactionPin) {
         // Validate transaction PIN logic
         if (account != null) {

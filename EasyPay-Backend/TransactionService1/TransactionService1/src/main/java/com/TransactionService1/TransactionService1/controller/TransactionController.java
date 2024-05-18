@@ -33,20 +33,20 @@ public class TransactionController {
 
     @PostMapping("/transfer")
     public ResponseEntity<Transaction> transferMoney(@RequestBody TransferRequest transferRequest) {
-    	
-    	
+
+
         try {
-        	
+
             Transaction transaction = transactionService.transferMoney(transferRequest);
-            
+
             return ResponseEntity.status(HttpStatus.SC_OK).body(transaction);
         } catch (TransactionException e) {
             return ResponseEntity.status(HttpStatus.SC_BAD_REQUEST).body(null);
         }
-        
+
     }
 
-    
+
     @GetMapping("/history/{accountId}")
     public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable String accountId) {
         List<Transaction> transactions = transactionService.getTransactionHistory(accountId);

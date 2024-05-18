@@ -17,24 +17,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 public class TransactionService1Application {
 
-	 public static void main(String[] args) {
-	        SpringApplication.run(TransactionService1Application.class, args);
-	        System.out.println("Transaction Service");
-	    }
+	public static void main(String[] args) {
+		SpringApplication.run(TransactionService1Application.class, args);
+		System.out.println("Transaction Service");
+	}
 
-	    @Bean
-	    public WebMvcConfigurer corsConfigurer() {
-	        return new WebMvcConfigurer() {
-	  
-	        	@Override
-	            public void addCorsMappings(CorsRegistry registry) {
-	                registry.addMapping("/**")
-	                        .allowedOrigins("http://localhost:3000") // Replace with your Angular app URL
-	                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
-	                        .allowCredentials(true);
-	                System.out.println("Transaction Service");
-	            }
-	        };
-	    }
+	@Bean
+	public WebMvcConfigurer configure() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry reg) {
+				reg.addMapping("/**").allowedOrigins("*");
+				System.out.println("Transaction service");
+			}
+		};
+	}
 
 }
